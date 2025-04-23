@@ -2,11 +2,9 @@ import express from 'express';
 import session from 'express-session';
 import { v4 as uuidv4 } from 'uuid';
 
-import { getProducts } from './modules/products.js';
-import { getVariantsWithoutImages } from './utils/getVariantsWithoutImages.js';
+import { getProducts, getVariantsWithoutImages } from './modules/products.js';
 import { PORT, SHOPIFY_STORE } from './constants.js';
 import { shopify } from './config.js';
-import { getShopifySession } from './utils/getShopifySession.js';
 
 const app = express();
 const port = PORT;
@@ -50,9 +48,8 @@ app.post('/auth', async (req, res) => {
 app.get('/getProducts', async (req, res) => {
   try {
     const response = await getProducts(req);
-    const products = response?.body.data.products;
 
-    res.json(products);
+    res.json(response);
   } catch (error) {
     console.log(error);
     res.send(error);
@@ -61,12 +58,9 @@ app.get('/getProducts', async (req, res) => {
 
 app.get('/getVariantsWithoutImages', async (req, res) => {
   try {
-    const response = await getProducts(req);
-    const products = response?.body.data.products;
+    const response = await getVariantsWithoutImages(req);
 
-    const variantsWithoutImages = getVariantsWithoutImages(products);
-
-    res.json(variantsWithoutImages);
+    res.json(response);
   } catch (error) {
     console.log(error);
     res.send(error);

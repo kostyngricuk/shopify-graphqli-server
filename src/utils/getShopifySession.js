@@ -1,1 +1,0 @@
-export const getShopifySession = (req) => req.session.shopifySession;

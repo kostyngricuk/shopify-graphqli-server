@@ -15,3 +15,9 @@ export const shopify = shopifyApi({
     unstable_managedPricingSupport: true
   },
 });
+
+export const getGraphqlClient = (session) => {
+  return new shopify.clients.Graphql({
+    session,
+  });
+}
